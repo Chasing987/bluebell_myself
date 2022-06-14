@@ -21,6 +21,8 @@ func Setup(mode string) *gin.Engine {
 	}
 
 	r := gin.New()
+	//  middlewares.RateLimitMiddleware(2*time.Second, 1)对全网站进行令牌桶限速，2秒钟访问1次
+	//r.Use(logger.GinLogger(), logger.GinRecovery(true), middlewares.RateLimitMiddleware(2*time.Second, 1))
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
 
 	r.LoadHTMLFiles("./templates/index.html")
@@ -50,6 +52,7 @@ func Setup(mode string) *gin.Engine {
 	v1.GET("/community/:id", controller.CommunityDetailHandler)
 	v1.GET("/post/:id", controller.GetPostDetailHandler)
 
+	// 如果想限流api，可以将middlewares.RateLimitMiddleware放在这里
 	v1.Use(middlewares.JWTAuthMiddleware()) //应用JWT认证中间件
 
 	{

@@ -30,21 +30,21 @@ import (
 // @host 127.0.0.1:8086
 // @BasePath /api/v1
 func main() {
-	//if len(os.Args) < 2 {
-	//	fmt.Println("need config file. eg: bluebell config.yaml")
-	//	return
-	//}
+	if len(os.Args) < 2 {
+		fmt.Println("need config file. eg: bluebell config.yaml")
+		return
+	}
 
 	//1.加载配置
-	//if err := settings.Init(os.Args[1]); err != nil {
-	//	fmt.Printf("init setting failed, err:%v\n", err)
-	//	return
-	//}
-
-	if err := settings.Init(); err != nil {
+	if err := settings.Init(os.Args[1]); err != nil {
 		fmt.Printf("init setting failed, err:%v\n", err)
 		return
 	}
+
+	//if err := settings.Init(); err != nil {
+	//	fmt.Printf("init setting failed, err:%v\n", err)
+	//	return
+	//}
 
 	//2.初始化日志
 	if err := logger.Init(settings.Conf.LogConfig, settings.Conf.Mode); err != nil {

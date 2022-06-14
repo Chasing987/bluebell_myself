@@ -51,7 +51,7 @@ type RedisConfig struct {
 	MinIdleConns int    `mapstructure:"min_idle_conns"`
 }
 
-func Init() (err error) {
+func Init(filePath string) (err error) {
 	//方式1：直接指定配置文件路径（相对路径或者绝对路径）
 	//相对路径：相对执行的可执行文件的相对路径
 	//绝对路径：系统中实际的文件路径
@@ -61,13 +61,13 @@ func Init() (err error) {
 	//方式2：指定配置文件和配置文件的位置，viper 自行查找可用的配置文件
 	//配置文件名不需要带后缀
 	//配置文件可以配置多个
-	viper.SetConfigName("config") // 指定配置文件名称（不需要带后缀）
-	viper.AddConfigPath(".")      // 指定查找配置文件的路径（这里使用的是相对路径）
+	//viper.SetConfigName("config") // 指定配置文件名称（不需要带后缀）
+	//viper.AddConfigPath(".")      // 指定查找配置文件的路径（这里使用的是相对路径）
 
 	//基本上是配合远程配置中心使用的，告诉 viper 当前的数据使用什么格式去解析
-	viper.SetConfigType("yaml") // 指定配置文件类型(专门用于远程配置信息时指定配置文件)
+	//viper.SetConfigType("yaml") // 指定配置文件类型(专门用于远程配置信息时指定配置文件)
 
-	//viper.SetConfigFile(filepath)
+	viper.SetConfigFile(filePath)
 
 	err = viper.ReadInConfig() // 读取配置信息
 	if err != nil {            // 读取配置信息失败
